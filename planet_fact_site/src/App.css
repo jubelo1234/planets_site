@@ -6,6 +6,12 @@
 }
 body {
   max-width: 2500px;
+  overflow-x: hidden;
+}
+.cenem {
+  position: absolute;
+  margin: auto auto;
+  transform: translate(-50%, -50%);
 }
 
 .bgMain {

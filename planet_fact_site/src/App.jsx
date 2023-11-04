@@ -17,9 +17,18 @@ function App() {
   const reducer = (state, action) => {
     switch (action.type) {
       case "planet":
-        return { ...state, content: "overview", planet: action.payload };
+        return {
+          ...state,
+          content: "overview",
+          planet: action.payload,
+          key: `overview-${action.payload}`,
+        };
       case "content":
-        return { ...state, content: action.payload };
+        return {
+          ...state,
+          content: action.payload,
+          key: `${action.payload}-${state.planet}`,
+        };
       default:
         return state;
     }
@@ -28,6 +37,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, {
     planet: "earth",
     content: "overview",
+    key: "earth-overview",
   });
 
   const curColors = {
@@ -474,6 +484,9 @@ function Planet() {
   }, []);
   const { state } = useContext(DataContext);
   const pl = state.planet;
+  const ims = state.content === "structure" ? `${pl}-internal` : pl;
+  const dif = state.content === "geology" ? "block" : "hidden";
+
   const widthObj = {
     earthm: "w-earthm",
     eartht: "w-eartht",
@@ -504,37 +517,47 @@ function Planet() {
   const desk = `${pl}d`;
   const tab = `${pl}t`;
   const mob = `${pl}m`;
-  console.log(windowWidth);
+
+  const plvars = {
+    initial: {
+      opacity: 0,
+      scale: 0.5,
+      x: "100%",
+      rotate: 45,
+    },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      x: 0,
+      rotate: 0,
+      transition: {
+        ease: "easeInOut",
+        duration: 1,
+        delay: 0.5,
+      },
+    },
+    exit: {
+      scale: 0.5,
+      opacity: 0,
+      x: "-100%",
+      rotate: -45,
+      transition: {
+        ease: "easeInOut",
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
-    <div className="w-full lap:h-[658px] lap:w-[56%] lap:max-w-[800px] lap:min-w-[600px] flex items-center justify-center mb-6 tab:mb-0 mt-8 lap:mt-2 tab:mt-28 h-[230px] tab:h-[375px]">
-      {state.content === "overview" ? (
-        <img
-          className={`${
-            windowWidth >= 1100
-              ? widthObj[desk]
-              : windowWidth >= 701
-              ? widthObj[tab]
-              : widthObj[mob]
-          }`}
-          src={`../public/imgr/planet-${pl}.svg`}
-          alt="earth"
-        />
-      ) : state.content === "structure" ? (
-        <img
-          className={`${
-            windowWidth >= 1100
-              ? widthObj[desk]
-              : windowWidth >= 701
-              ? widthObj[tab]
-              : widthObj[mob]
-          }`}
-          src={`../public/imgr/planet-${pl}-internal.svg`}
-          alt="planet internal"
-        />
-      ) : (
-        <div
-          className={`relative ${
+    <div className="relative w-full lap:h-[658px] lap:w-[56%] lap:max-w-[800px] lap:min-w-[600px] grid place-items-center  mb-6 tab:mb-0 mt-8 lap:mt-2 tab:mt-28 h-[230px] tab:h-[375px]">
+      <AnimatePresence>
+        <motion.div
+          key={state.key}
+          variants={plvars}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className={`absolute ${
             windowWidth >= 1100
               ? widthObj[desk]
               : windowWidth >= 701
@@ -544,16 +567,16 @@ function Planet() {
         >
           <img
             className="w-full"
-            src={`../public/imgr/planet-${pl}.svg`}
+            src={`../public/imgr/planet-${ims}.svg`}
             alt="planets"
           />
           <img
-            className="absolute bottom-1/2 mx-auto w-[100px] tab:w-[100px] translate-y-[110%]   lap:w-[150px] left-1/2 transform -translate-x-1/2 tab:translate-y-[50%]"
+            className={`absolute ${dif} bottom-1/2 mx-auto w-[100px] tab:w-[100px] translate-y-[110%]   lap:w-[150px] left-1/2 transform -translate-x-1/2 tab:translate-y-[50%]`}
             src={`../public/imgr/planet-${pl}-geology.png`}
             alt="geology"
           />
-        </div>
-      )}
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
