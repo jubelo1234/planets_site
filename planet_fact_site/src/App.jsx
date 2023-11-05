@@ -193,7 +193,7 @@ function Nav() {
           alt="menu_opener"
           onClick={() => setMenu(!menuState)}
         />
-        <ul className="hidden tab:flex uppercase justify-between items-center w-full text-[15px] font-sans font-extrabold max-w-[680px]">
+        <ul className="hidden cursor-pointer tab:flex uppercase justify-between items-center w-full text-[15px] font-sans font-extrabold max-w-[680px]">
           <li
             className={`${
               state.planet === "mercury"
@@ -283,7 +283,7 @@ function Nav() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="origin-right z-50 pt-10 pb-12 fixed w-full h-[90%]  justify-evenly bg-mainBg mob_ul flex flex-col gap-4 tab:hidden font-sans text-[1.15rem] text-slate-200 font-bold"
+            className="origin-right cursor-pointer z-50 pt-10 pb-12 fixed w-full h-[90%]  justify-evenly bg-mainBg mob_ul flex flex-col gap-4 tab:hidden font-sans text-[1.15rem] text-slate-200 font-bold"
           >
             <motion.li
               variants={linkVars}
@@ -441,7 +441,7 @@ function Tabs() {
   const colorbg = `${state.planet}abg`;
   const clss = `bg-dgray after:content-[''] after:absolute after:w-full text-slate-100 after:bottom-0 after:h-[4px] ${curColors[colorbg]} after:left-0`;
   return (
-    <div className="font-sans flex gap-[2vw] items-center justify-center tbbt font-bold tracking-[0.55em] text-slate-400 text-[11px] tab:hidden ">
+    <div className="font-sans cursor-pointer flex gap-[2vw] items-center justify-center tbbt font-bold tracking-[0.55em] text-slate-400 text-[11px] tab:hidden ">
       <button
         className={`relative txy w-[28%] py-4 px-4 tracking-[0.1em] ${
           state.content === "overview" ? clss : ""
@@ -583,34 +583,44 @@ function Planet() {
 
 function Info() {
   const { state } = useContext(DataContext);
+
   return (
-    <div className="tab:max-w-[50%] lap:max-w-[35vw] lap:min-w-[450px] ">
-      <h1 className="py-4 text-[40px] font-ant text-center tab:text-left tab:text-[50px] lap:font-bold lap:text-[70px] uppercase tab:mb-7 lap:mb-4">
-        {state.planet}
-      </h1>
-      <p className="px-1 tab:px-0 text-center text-slate-400 text-[14px] lap:h-[140px] lap:text-[18px] font-semibold tab:text-left tab:mb-14 lap:mb-8">
-        {data[state.planet][state.content].content}
-      </p>
-      <p className="flex gap-1 text-[18px] lap:text-[22px] text-slate-500 font-sans  mt-8 justify-center tab:justify-start tab:mb-4 lap:mb-0">
-        Source:
-        <a
-          href={data[state.planet][state.content].source}
-          className="flex items-center font-semibold underline text-slate-400"
-        >
-          Wikipedia <img className="pl-2 h-[16px]" src={arrow} alt="arrow" />
-        </a>
-      </p>
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={state.planet}
+        initial={{ opacity: 0, x: "20%" }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: "20%" }}
+        transition={{ duration: 1 }}
+        className="tab:max-w-[50%] min-h-fit hin lap:max-w-[35vw] lap:min-w-[450px] "
+      >
+        <h1 className="py-4 text-[40px] font-ant text-center tab:text-left tab:text-[50px] lap:font-bold lap:text-[70px] uppercase tab:mb-7 lap:mb-4">
+          {state.planet}
+        </h1>
+        <p className="px-1 tab:px-0 text-center text-slate-400 text-[14px] lap:h-[140px] lap:text-[18px] font-semibold tab:text-left tab:mb-14 lap:mb-8">
+          {data[state.planet][state.content].content}
+        </p>
+        <p className="flex gap-1 text-[18px] lap:text-[22px] text-slate-500 font-sans  mt-8 justify-center tab:justify-start tab:mb-4 lap:mb-0">
+          Source:
+          <a
+            href={data[state.planet][state.content].source}
+            className="flex items-center font-semibold underline text-slate-400"
+          >
+            Wikipedia <img className="pl-2 h-[16px]" src={arrow} alt="arrow" />
+          </a>
+        </p>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 // eslint-disable-next-line
 function Stats({ title, data }) {
   return (
-    <div className="flex items-center justify-between border border-slate-600 border-solid w-[90vw] uppercase mx-auto px-6 py-2 tab:flex-col tab:w-[20vw] lap:max-w-[249.5px] tab:justify-items-start tab:items-start tab:py-6 lap:py-4 ">
+    <div className="flex  items-center justify-between border border-slate-600 border-solid w-[90vw] uppercase mx-auto px-6 py-2 tab:flex-col tab:w-[20vw] lap:max-w-[249.5px] tab:justify-items-start tab:items-start tab:py-6 lap:py-4 ">
       <p className="text-slate-500 font-sans text-[12px] lap:text-[1rem] font-bold">
         {title}
       </p>
-      <h3 className="font-ant text-[18px] tab:text-[22px] lap:text-[2.5rem]">
+      <h3 className="font-ant transition-all duration-1000 text-[18px] tab:text-[22px] lap:text-[2.5rem]">
         {data}
       </h3>
     </div>
@@ -621,31 +631,31 @@ function Tbtabs() {
   const { dispatch, state, curColors } = useContext(DataContext);
   const cl = state.content;
   const send = `${state.planet}bg`;
-  const color = `${curColors[send]}`;
+  const color = `text-slate-100 ${curColors[send]}`;
 
   return (
     <div className="tab:flex flex-col gap-5 items-center lap:items-start lap:justify-start lap:w-full hidden ">
       <div
         value="overview"
         className={`lex max-w-[320px] ${
-          cl === "overview" ? color : ""
-        } w-[35vw] lap:w-[35vw] lap:max-w-[510px] text-[11px] lap:text-[16px] text-slate-400 justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 lap:py-4 border border-slate-600`}
+          cl === "overview" ? color : "text-slate-400"
+        } w-[35vw] transition-colors duration-300 lap:w-[35vw] cursor-pointer lap:max-w-[510px] text-[11px] lap:text-[16px]  justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 lap:py-4 border border-slate-600`}
         onClick={() => dispatch({ type: "content", payload: "overview" })}
       >
         01 <span className=" pl-6 text-slate-50">overview</span>
       </div>
       <div
         className={`flex w-[35vw] max-w-[320px] lap:w-[35vw] ${
-          cl === "structure" ? color : ""
-        } lap:max-w-[510px] text-[11px] lap:text-[16px] lap:py-4 text-slate-400 justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 border border-slate-600`}
+          cl === "structure" ? color : "text-slate-400"
+        } lap:max-w-[510px] text-[11px] transition-colors cursor-pointer duration-300 lap:text-[16px] lap:py-4  justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 border border-slate-600`}
         onClick={() => dispatch({ type: "content", payload: "structure" })}
       >
         02 <span className="pl-6 text-slate-50">internal structure</span>
       </div>
       <div
         className={`flex w-[35vw] lap:w-[35vw] lap:max-w-[510px] ${
-          cl === "geology" ? color : ""
-        } max-w-[320px] text-[11px] lap:text-[16px] lap:py-4 text-slate-400 justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 border border-slate-600`}
+          cl === "geology" ? color : "text-slate-400"
+        } max-w-[320px] text-[11px] transition-colors duration-300 cursor-pointer lap:text-[16px] lap:py-4  justify-start uppercase items-center tracking-[0.15em] font-bold font-sans px-6 py-3 border border-slate-600`}
         onClick={() => dispatch({ type: "content", payload: "geology" })}
       >
         03 <span className="pl-6 text-slate-50">surface geology</span>

@@ -39,6 +39,21 @@ body {
     font-size: 9.5px;
   }
 }
+@media screen and (max-width: 701px) {
+  .hin {
+    height: 250px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .hin {
+    height: 300px;
+  }
+}
+@media screen and (max-width: 321px) {
+  .hin {
+    height: 340px;
+  }
+}
 @media screen and (max-width: 290px) {
   .txy {
     font-size: 8.5px;
