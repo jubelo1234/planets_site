@@ -21,13 +21,13 @@ function App() {
           ...state,
           content: "overview",
           planet: action.payload,
-          key: `overview-${action.payload}`,
+          key: `${action.payload}-overview`,
         };
       case "content":
         return {
           ...state,
           content: action.payload,
-          key: `${action.payload}-${state.planet}`,
+          key: `${state.planet}-${action.payload}`,
         };
       default:
         return state;
@@ -66,6 +66,12 @@ function App() {
     saturnbg: "bg-saturn",
     saturnabg: "after:bg-saturn",
   };
+
+  useEffect(() => {
+    let tit = state.key;
+    let rty = tit.charAt(0).toUpperCase() + tit.slice(1).toLowerCase();
+    document.title = rty;
+  }, [state.key]);
   return (
     <div className="bg-mainBg w-screen h-full min-h-screen relative overflow-x-hidden">
       <motion.div
@@ -567,12 +573,12 @@ function Planet() {
         >
           <img
             className="w-full"
-            src={`../public/imgr/planet-${ims}.svg`}
+            src={`../imgr/planet-${ims}.svg`}
             alt="planets"
           />
           <img
             className={`absolute ${dif} bottom-1/2 mx-auto w-[100px] tab:w-[100px] translate-y-[110%]   lap:w-[150px] left-1/2 transform -translate-x-1/2 tab:translate-y-[50%]`}
-            src={`../public/imgr/planet-${pl}-geology.png`}
+            src={`../imgr/planet-${pl}-geology.png`}
             alt="geology"
           />
         </motion.div>
