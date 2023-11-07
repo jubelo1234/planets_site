@@ -471,9 +471,9 @@ function Tabs() {
   const colorbg = `${state.planet}abg`;
   const clss = `bg-dgray after:content-[''] after:absolute after:w-full text-slate-100 after:bottom-0 after:h-[4px] ${curColors[colorbg]} after:left-0`;
   return (
-    <div className="font-sans cursor-pointer flex gap-[2vw] items-center justify-center tbbt font-bold tracking-[0.55em] text-slate-400 text-[11px] tab:hidden ">
+    <div className="font-sans flex gap-[2vw] items-center justify-center tbbt font-bold tracking-[0.55em] text-slate-400 text-[11px] tab:hidden ">
       <button
-        className={`relative txy w-[28%] py-4 px-4 tracking-[0.1em] ${
+        className={`relative txy w-[28%] cursor-pointer  py-4 px-4 tracking-[0.1em] ${
           state.content === "overview" ? clss : ""
         }`}
         onClick={() => dispatch({ type: "content", payload: "overview" })}
@@ -481,7 +481,7 @@ function Tabs() {
         OVERVIEW
       </button>
       <button
-        className={`relative txy w-[28%] py-4 px-4 tracking-[0.1em] ${
+        className={`relative txy w-[28%] cursor-pointer  py-4 px-4 tracking-[0.1em] ${
           state.content === "structure" ? clss : ""
         }`}
         onClick={() => dispatch({ type: "content", payload: "structure" })}
@@ -489,7 +489,7 @@ function Tabs() {
         STRUCTURE
       </button>
       <button
-        className={`relative txy w-[28%] py-4 px-4 tracking-[0.1em] ${
+        className={`relative txy w-[28%] cursor-pointer  py-4 px-4 tracking-[0.1em] ${
           state.content === "geology" ? clss : ""
         }`}
         onClick={() => dispatch({ type: "content", payload: "geology" })}
