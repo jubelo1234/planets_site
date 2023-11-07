@@ -8,6 +8,30 @@ import {
 import "./App.css";
 import hambur from "./images/ham-bur.svg";
 import { AnimatePresence, motion } from "framer-motion";
+import earth from "./imgr/planet-earth.svg";
+import earth_in from "./imgr/planet-earth-internal.svg";
+import earth_geo from "./imgr/planet-earth-geology.png";
+import jupiter from "./imgr/planet-jupiter.svg";
+import jupiter_in from "./imgr/planet-jupiter-internal.svg";
+import jupiter_geo from "./imgr/planet-jupiter-geology.png";
+import mars from "./imgr/planet-mars.svg";
+import mars_in from "./imgr/planet-mars-internal.svg";
+import mars_geo from "./imgr/planet-mars-geology.png";
+import mercury from "./imgr/planet-mercury.svg";
+import mercury_in from "./imgr/planet-mercury-internal.svg";
+import mercury_geo from "./imgr/planet-mercury-geology.png";
+import venus from "./imgr/planet-venus.svg";
+import venus_in from "./imgr/planet-venus-internal.svg";
+import venus_geo from "./imgr/planet-venus-geology.png";
+import uranus from "./imgr/planet-uranus.svg";
+import uranus_in from "./imgr/planet-uranus-internal.svg";
+import uranus_geo from "./imgr/planet-uranus-geology.png";
+import neptune from "./imgr/planet-neptune.svg";
+import neptune_in from "./imgr/planet-neptune-internal.svg";
+import neptune_geo from "./imgr/planet-neptune-geology.png";
+import saturn from "./imgr/planet-saturn.svg";
+import saturn_in from "./imgr/planet-saturn-internal.svg";
+import saturn_geo from "./imgr/planet-saturn-geology.png";
 
 import data from "./planetData";
 import arrow from "./images/arrowUp.svg";
@@ -490,7 +514,6 @@ function Planet() {
   }, []);
   const { state } = useContext(DataContext);
   const pl = state.planet;
-  const ims = state.content === "structure" ? `${pl}-internal` : pl;
   const dif = state.content === "geology" ? "block" : "hidden";
 
   const widthObj = {
@@ -519,6 +542,34 @@ function Planet() {
     venust: "w-venust",
     venusd: "w-venusd",
   };
+
+  const plt = {
+    earth: earth,
+    "earth-internal": earth_in,
+    "earth-geo": earth_geo,
+    jupiter: jupiter,
+    "jupiter-internal": jupiter_in,
+    "jupiter-geo": jupiter_geo,
+    mars: mars,
+    "mars-internal": mars_in,
+    "mars-geo": mars_geo,
+    venus: venus,
+    "venus-internal": venus_in,
+    "venus-geo": venus_geo,
+    mercury: mercury,
+    "mercury-internal": mercury_in,
+    "mercury-geo": mercury_geo,
+    saturn: saturn,
+    "saturn-internal": saturn_in,
+    "saturn-geo": saturn_geo,
+    uranus: uranus,
+    "uranus-internal": uranus_in,
+    "uranus-geo": uranus_geo,
+    neptune: neptune,
+    "neptune-internal": neptune_in,
+    "neptune-geo": neptune_geo,
+  };
+  const ims = state.content === "structure" ? `${pl}-internal` : pl;
 
   const desk = `${pl}d`;
   const tab = `${pl}t`;
@@ -571,14 +622,10 @@ function Planet() {
               : widthObj[mob]
           }`}
         >
-          <img
-            className="w-full"
-            src={`../imgr/planet-${ims}.svg`}
-            alt="planets"
-          />
+          <img className="w-full" src={plt[ims]} alt="planets" />
           <img
             className={`absolute ${dif} bottom-1/2 mx-auto w-[100px] tab:w-[100px] translate-y-[110%]   lap:w-[150px] left-1/2 transform -translate-x-1/2 tab:translate-y-[50%]`}
-            src={`../imgr/planet-${pl}-geology.png`}
+            src={plt[`${pl}-geo`]}
             alt="geology"
           />
         </motion.div>
